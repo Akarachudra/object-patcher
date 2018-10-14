@@ -24,8 +24,19 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchStringField()
+        [TestCase("stringField")]
+        [TestCase("StringField")]
+        [TestCase("StRingFieLd")]
+        public void CanPatchStringFieldWithDifferentCases(string key)
         {
+            const string newValue = "new value";
+            var testObject = new TestObject();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {key, newValue}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.StringField.Should().Be(newValue);
         }
     }
 }

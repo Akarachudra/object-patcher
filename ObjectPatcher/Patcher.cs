@@ -20,10 +20,13 @@ namespace ObjectPatcher
             foreach (var entry in patchDictionary)
             {
                 var memberInfo = GetMemberInfo(type, entry.Key);
-                var propertyInfo = memberInfo as PropertyInfo;
-                if (propertyInfo != null)
+                if (memberInfo is PropertyInfo propertyInfo)
                 {
                     propertyInfo.SetValue(obj, entry.Value);
+                }
+                else if (memberInfo is FieldInfo fieldInfo)
+                {
+                    fieldInfo.SetValue(obj, entry.Value);
                 }
             }
         }
