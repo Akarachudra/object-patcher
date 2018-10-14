@@ -52,5 +52,33 @@ namespace ObjectPatcher.Tests
             Patcher.Apply(testObject, patchDictionary);
             testObject.GetPrivateStringField().Should().Be(oldValue);
         }
+
+        [Test]
+        public void GetOnlyPropertyCantBePatched()
+        {
+            const string newValue = "new value";
+            var testObject = new TestObject();
+            var oldValue = testObject.PropertyWithGetOnly;
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {"PropertyWithGetOnly", newValue}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.PropertyWithGetOnly.Should().Be(oldValue);
+        }
+
+        [Test]
+        public void PrivatePropertyCantBePatched()
+        {
+            const string newValue = "new value";
+            var testObject = new TestObject();
+            var oldValue = testObject.GetPrivateStringProperty();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {"PrivateStringProperty", newValue}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.GetPrivateStringProperty().Should().Be(oldValue);
+        }
     }
 }

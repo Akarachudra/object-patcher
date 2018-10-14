@@ -52,7 +52,7 @@ namespace ObjectPatcher
         private static void FillMembersForType(Type t)
         {
             var members = new ConcurrentDictionary<string, MemberInfo>();
-            var properties = t.GetRuntimeProperties();
+            var properties = t.GetRuntimeProperties().Where(x => x.SetMethod != null && x.SetMethod.IsPublic);
             var fields = t.GetRuntimeFields().Where(x => x.IsPublic);
             foreach (var propertyInfo in properties)
             {
