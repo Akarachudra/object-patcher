@@ -23,12 +23,32 @@ namespace ObjectPatcher
                 var memberInfo = GetMemberInfo(type, entry.Key);
                 if (memberInfo is PropertyInfo propertyInfo)
                 {
-                    propertyInfo.SetValue(obj, entry.Value);
+                    SetPropertyValue(propertyInfo, obj, entry.Value);
                 }
                 else if (memberInfo is FieldInfo fieldInfo)
                 {
                     fieldInfo.SetValue(obj, entry.Value);
                 }
+            }
+        }
+
+        private static void SetPropertyValue<T>(PropertyInfo propertyInfo, T obj, object value)
+        {
+            if (value is string)
+            {
+                var propertyType = propertyInfo.PropertyType;
+                if (propertyType == typeof(Guid?) || propertyType == typeof(Guid))
+                {
+                    propertyInfo.SetValue(obj, Guid.Parse(value.ToString()));
+                }
+                else
+                {
+                    propertyInfo.SetValue(obj, value);
+                }
+            }
+            else
+            {
+                propertyInfo.SetValue(obj, value);
             }
         }
 
