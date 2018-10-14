@@ -7,11 +7,11 @@ namespace ObjectPatcher
 {
     public static class Patcher
     {
-        private static ConcurrentDictionary<Type, ConcurrentDictionary<string, MemberInfo>> typeMember;
+        private static readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, MemberInfo>> TypeMember;
 
         static Patcher()
         {
-            typeMember = new ConcurrentDictionary<Type, ConcurrentDictionary<string, MemberInfo>>();
+            TypeMember = new ConcurrentDictionary<Type, ConcurrentDictionary<string, MemberInfo>>();
         }
 
         public static void Apply<T>(T obj, Dictionary<string, object> patchDictionary)
@@ -33,10 +33,10 @@ namespace ObjectPatcher
 
         private static MemberInfo GetMemberInfo(Type t, string key)
         {
-            if (!typeMember.TryGetValue(t, out var members))
+            if (!TypeMember.TryGetValue(t, out var members))
             {
                 FillMembersForType(t);
-                members = typeMember[t];
+                members = TypeMember[t];
             }
 
             var normalizedKey = key.ToLower();
@@ -63,7 +63,7 @@ namespace ObjectPatcher
                 members.TryAdd(fieldInfo.Name.ToLower(), fieldInfo);
             }
 
-            typeMember.TryAdd(t, members);
+            TypeMember.TryAdd(t, members);
         }
     }
 }
