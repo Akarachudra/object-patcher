@@ -38,5 +38,19 @@ namespace ObjectPatcher.Tests
             Patcher.Apply(testObject, patchDictionary);
             testObject.StringField.Should().Be(newValue);
         }
+
+        [Test]
+        public void PrivateFieldCantBePatched()
+        {
+            const string newValue = "new value";
+            var testObject = new TestObject();
+            var oldValue = testObject.GetPrivateStringField();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {"privateStringField", newValue}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.GetPrivateStringField().Should().Be(oldValue);
+        }
     }
 }

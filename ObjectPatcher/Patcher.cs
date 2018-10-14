@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace ObjectPatcher
@@ -52,7 +53,7 @@ namespace ObjectPatcher
         {
             var members = new ConcurrentDictionary<string, MemberInfo>();
             var properties = t.GetRuntimeProperties();
-            var fields = t.GetRuntimeFields();
+            var fields = t.GetRuntimeFields().Where(x => x.IsPublic);
             foreach (var propertyInfo in properties)
             {
                 members.TryAdd(propertyInfo.Name.ToLower(), propertyInfo);
