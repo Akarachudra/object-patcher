@@ -41,6 +41,10 @@ namespace ObjectPatcher
                 {
                     propertyInfo.SetValue(obj, Guid.Parse(value.ToString()));
                 }
+                else if (propertyType == typeof(DateTime?) || propertyType == typeof(DateTime))
+                {
+                    propertyInfo.SetValue(obj, DateTime.Parse(value.ToString()));
+                }
                 else
                 {
                     propertyInfo.SetValue(obj, value);

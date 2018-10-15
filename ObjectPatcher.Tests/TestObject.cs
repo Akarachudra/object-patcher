@@ -24,6 +24,10 @@ namespace ObjectPatcher.Tests
 
         public Guid? NullableGuidProperty { get; set; }
 
+        public DateTime DateTimeProperty { get; set; }
+
+        public DateTime? NullableDateTimeProperty { get; set; }
+
         public string StringField;
 
         private string PrivateStringProperty { get; set; }

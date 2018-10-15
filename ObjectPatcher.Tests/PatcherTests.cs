@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace ObjectPatcher.Tests
@@ -87,7 +89,7 @@ namespace ObjectPatcher.Tests
         [Test]
         public void CanPatchNullableGuidPropertyFromString()
         {
-            var guid = Guid.NewGuid();
+            Guid? guid = Guid.NewGuid();
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
@@ -95,6 +97,79 @@ namespace ObjectPatcher.Tests
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableGuidProperty.Should().Be(guid);
+        }
+
+        [Test]
+        [TestCase("dateTimeProperty")]
+        [TestCase("DateTimeProperty")]
+        [TestCase("DaTeTiMeProperTy")]
+        public void CanPatchDateTimePropertyCaseInsensitive(string key)
+        {
+            var dateTime = DateTime.UtcNow;
+            var testObject = new TestObject();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {key, dateTime}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.DateTimeProperty.Should().Be(dateTime);
+        }
+
+        [Test]
+        public void CanPatchDateTimePropertyFromJsonString()
+        {
+            var dateTime = DateTime.UtcNow;
+            var testObject = new TestObject();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {"DateTimeProperty", JsonConvert.SerializeObject(dateTime)}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.DateTimeProperty.Should().Be(dateTime);
+        }
+
+        [Test]
+        [TestCase("nullableDateTimeProperty")]
+        [TestCase("NullableDateTimeProperty")]
+        [TestCase("NuLlableDateTimeProperTy")]
+        public void CanPatchNullableDateTimePropertyCaseInsensitive(string key)
+        {
+            DateTime? guid = DateTime.UtcNow;
+            var testObject = new TestObject();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {key, guid}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.NullableDateTimeProperty.Should().Be(guid);
+        }
+
+        [Test]
+        public void CanPatchNullableDateTimePropertyWithNullValue()
+        {
+            var testObject = new TestObject
+            {
+                NullableDateTimeProperty = DateTime.UtcNow
+            };
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {"NullableDateTimeProperty", null}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.NullableDateTimeProperty.Should().BeNull();
+        }
+
+        [Test]
+        public void CanPatchNullableDateTimePropertyFromJsonString()
+        {
+            DateTime? dateTime = DateTime.UtcNow;
+            var testObject = new TestObject();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                {"NullableDateTimeProperty", JsonConvert.SerializeObject(dateTime)}
+            };
+            Patcher.Apply(testObject, patchDictionary);
+            testObject.NullableDateTimeProperty.Should().Be(dateTime);
         }
 
         [Test]
