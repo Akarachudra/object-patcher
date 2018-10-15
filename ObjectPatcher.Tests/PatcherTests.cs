@@ -43,13 +43,13 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchGuidPropertyFromString()
+        public void CanPatchGuidPropertyFromJsonString()
         {
             var guid = Guid.NewGuid();
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"GuidProperty", guid.ToString()}
+                {"GuidProperty", JsonConvert.SerializeObject(guid)}
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.GuidProperty.Should().Be(guid);
@@ -87,13 +87,13 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchNullableGuidPropertyFromString()
+        public void CanPatchNullableGuidPropertyFromJsonString()
         {
             Guid? guid = Guid.NewGuid();
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"NullableGuidProperty", guid.ToString()}
+                {"NullableGuidProperty", JsonConvert.SerializeObject(guid)}
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableGuidProperty.Should().Be(guid);

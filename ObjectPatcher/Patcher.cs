@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace ObjectPatcher
 {
@@ -39,11 +40,11 @@ namespace ObjectPatcher
                 var propertyType = propertyInfo.PropertyType;
                 if (propertyType == typeof(Guid?) || propertyType == typeof(Guid))
                 {
-                    propertyInfo.SetValue(obj, Guid.Parse(value.ToString()));
+                    propertyInfo.SetValue(obj, JsonConvert.DeserializeObject<Guid>(value.ToString()));
                 }
                 else if (propertyType == typeof(DateTime?) || propertyType == typeof(DateTime))
                 {
-                    propertyInfo.SetValue(obj, DateTime.Parse(value.ToString()));
+                    propertyInfo.SetValue(obj, JsonConvert.DeserializeObject<DateTime>(value.ToString()));
                 }
                 else
                 {
