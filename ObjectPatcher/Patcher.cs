@@ -21,7 +21,8 @@ namespace ObjectPatcher
             var type = obj.GetType();
             foreach (var entry in patchDictionary)
             {
-                var memberInfo = GetMemberInfo(type, entry.Key);
+                var normalizedKey = entry.Key.ToLower();
+                var memberInfo = GetMemberInfo(type, normalizedKey);
                 if (memberInfo is PropertyInfo propertyInfo)
                 {
                     SetPropertyValue(propertyInfo, obj, entry.Value);
@@ -65,8 +66,7 @@ namespace ObjectPatcher
                 members = TypeMember[t];
             }
 
-            var normalizedKey = key.ToLower();
-            if (members.TryGetValue(normalizedKey, out var memberInfo))
+            if (members.TryGetValue(key, out var memberInfo))
             {
                 return memberInfo;
             }

@@ -19,7 +19,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {key, newValue}
+                { key, newValue }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.StringProperty.Should().Be(newValue);
@@ -35,7 +35,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {key, guid}
+                { key, guid }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.GuidProperty.Should().Be(guid);
@@ -48,7 +48,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"GuidProperty", JsonConvert.SerializeObject(guid)}
+                { "GuidProperty", JsonConvert.SerializeObject(guid) }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.GuidProperty.Should().Be(guid);
@@ -64,7 +64,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {key, guid}
+                { key, guid }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableGuidProperty.Should().Be(guid);
@@ -79,7 +79,7 @@ namespace ObjectPatcher.Tests
             };
             var patchDictionary = new Dictionary<string, object>
             {
-                {"NullableGuidProperty", null}
+                { "NullableGuidProperty", null }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableGuidProperty.Should().BeNull();
@@ -92,7 +92,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"NullableGuidProperty", JsonConvert.SerializeObject(guid)}
+                { "NullableGuidProperty", JsonConvert.SerializeObject(guid) }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableGuidProperty.Should().Be(guid);
@@ -108,7 +108,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {key, dateTime}
+                { key, dateTime }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.DateTimeProperty.Should().Be(dateTime);
@@ -121,7 +121,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"DateTimeProperty", JsonConvert.SerializeObject(dateTime)}
+                { "DateTimeProperty", JsonConvert.SerializeObject(dateTime) }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.DateTimeProperty.Should().Be(dateTime);
@@ -137,7 +137,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {key, guid}
+                { key, guid }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableDateTimeProperty.Should().Be(guid);
@@ -152,7 +152,7 @@ namespace ObjectPatcher.Tests
             };
             var patchDictionary = new Dictionary<string, object>
             {
-                {"NullableDateTimeProperty", null}
+                { "NullableDateTimeProperty", null }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableDateTimeProperty.Should().BeNull();
@@ -165,7 +165,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"NullableDateTimeProperty", JsonConvert.SerializeObject(dateTime)}
+                { "NullableDateTimeProperty", JsonConvert.SerializeObject(dateTime) }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.NullableDateTimeProperty.Should().Be(dateTime);
@@ -181,7 +181,7 @@ namespace ObjectPatcher.Tests
             var testObject = new TestObject();
             var patchDictionary = new Dictionary<string, object>
             {
-                {key, newValue}
+                { key, newValue }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.StringField.Should().Be(newValue);
@@ -195,7 +195,7 @@ namespace ObjectPatcher.Tests
             var oldValue = testObject.GetPrivateStringField();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"privateStringField", newValue}
+                { "privateStringField", newValue }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.GetPrivateStringField().Should().Be(oldValue);
@@ -209,7 +209,7 @@ namespace ObjectPatcher.Tests
             var oldValue = testObject.PropertyWithGetOnly;
             var patchDictionary = new Dictionary<string, object>
             {
-                {"PropertyWithGetOnly", newValue}
+                { "PropertyWithGetOnly", newValue }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.PropertyWithGetOnly.Should().Be(oldValue);
@@ -223,10 +223,23 @@ namespace ObjectPatcher.Tests
             var oldValue = testObject.GetPrivateStringProperty();
             var patchDictionary = new Dictionary<string, object>
             {
-                {"PrivateStringProperty", newValue}
+                { "PrivateStringProperty", newValue }
             };
             Patcher.Apply(testObject, patchDictionary);
             testObject.GetPrivateStringProperty().Should().Be(oldValue);
+        }
+
+        [Test]
+        public void Not_Exists_Field_Patching_Does_Not_Throws_Exception()
+        {
+            const string notExistsField = "ImNotExists";
+            var testObject = new TestObject();
+            var patchDictionary = new Dictionary<string, object>
+            {
+                { notExistsField, "some value" }
+            };
+            Action applyAction = () => Patcher.Apply(testObject, patchDictionary);
+            applyAction.Should().NotThrow();
         }
     }
 }
