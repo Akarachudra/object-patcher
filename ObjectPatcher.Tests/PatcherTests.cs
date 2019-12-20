@@ -13,7 +13,7 @@ namespace ObjectPatcher.Tests
         [TestCase("stringProperty")]
         [TestCase("StringProperty")]
         [TestCase("StRingProperTy")]
-        public void CanPatchStringPropertyCaseInsensitive(string key)
+        public void Can_Patch_StringProperty_CaseInsensitive(string key)
         {
             const string newValue = "new value";
             var testObject = new TestObject();
@@ -29,7 +29,7 @@ namespace ObjectPatcher.Tests
         [TestCase("guidProperty")]
         [TestCase("GuidProperty")]
         [TestCase("GuIdProperTy")]
-        public void CanPatchGuidPropertyCaseInsensitive(string key)
+        public void Can_Patch_GuidProperty_CaseInsensitive(string key)
         {
             var guid = Guid.NewGuid();
             var testObject = new TestObject();
@@ -42,7 +42,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchGuidPropertyFromJsonString()
+        public void Can_Patch_GuidProperty_From_JsonString()
         {
             var guid = Guid.NewGuid();
             var testObject = new TestObject();
@@ -58,7 +58,7 @@ namespace ObjectPatcher.Tests
         [TestCase("nullableGuidProperty")]
         [TestCase("NullableGuidProperty")]
         [TestCase("NuLlableGuIdProperTy")]
-        public void CanPatchNullableGuidPropertyCaseInsensitive(string key)
+        public void Can_Patch_NullableGuidProperty_CaseInsensitive(string key)
         {
             Guid? guid = Guid.NewGuid();
             var testObject = new TestObject();
@@ -71,7 +71,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchNullableGuidPropertyWithNullValue()
+        public void Can_Patch_NullableGuidProperty_WithNullValue()
         {
             var testObject = new TestObject
             {
@@ -86,7 +86,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchNullableGuidPropertyFromJsonString()
+        public void Can_Patch_NullableGuidProperty_From_JsonString()
         {
             Guid? guid = Guid.NewGuid();
             var testObject = new TestObject();
@@ -102,7 +102,7 @@ namespace ObjectPatcher.Tests
         [TestCase("dateTimeProperty")]
         [TestCase("DateTimeProperty")]
         [TestCase("DaTeTiMeProperTy")]
-        public void CanPatchDateTimePropertyCaseInsensitive(string key)
+        public void Can_Patch_DateTimeProperty_CaseInsensitive(string key)
         {
             var dateTime = DateTime.UtcNow;
             var testObject = new TestObject();
@@ -115,7 +115,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchDateTimePropertyFromJsonString()
+        public void Can_Patch_DateTimeProperty_From_JsonString()
         {
             var dateTime = DateTime.UtcNow;
             var testObject = new TestObject();
@@ -131,7 +131,7 @@ namespace ObjectPatcher.Tests
         [TestCase("nullableDateTimeProperty")]
         [TestCase("NullableDateTimeProperty")]
         [TestCase("NuLlableDateTimeProperTy")]
-        public void CanPatchNullableDateTimePropertyCaseInsensitive(string key)
+        public void Can_Patch_NullableDateTimeProperty_CaseInsensitive(string key)
         {
             DateTime? guid = DateTime.UtcNow;
             var testObject = new TestObject();
@@ -144,7 +144,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchNullableDateTimePropertyWithNullValue()
+        public void Can_Patch_NullableDateTimeProperty_WithNullValue()
         {
             var testObject = new TestObject
             {
@@ -159,7 +159,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void CanPatchNullableDateTimePropertyFromJsonString()
+        public void Can_Patch_NullableDateTimeProperty_From_JsonString()
         {
             DateTime? dateTime = DateTime.UtcNow;
             var testObject = new TestObject();
@@ -175,7 +175,7 @@ namespace ObjectPatcher.Tests
         [TestCase("stringField")]
         [TestCase("StringField")]
         [TestCase("StRingFieLd")]
-        public void CanPatchStringFieldCaseInsensitive(string key)
+        public void Can_Patch_StringField_CaseInsensitive(string key)
         {
             const string newValue = "new value";
             var testObject = new TestObject();
@@ -188,7 +188,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void PrivateFieldCantBePatched()
+        public void Private_Field_CanNot_BePatched()
         {
             const string newValue = "new value";
             var testObject = new TestObject();
@@ -202,7 +202,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void GetOnlyPropertyCantBePatched()
+        public void GetOnlyProperty_CanNot_BePatched()
         {
             const string newValue = "new value";
             var testObject = new TestObject();
@@ -216,7 +216,7 @@ namespace ObjectPatcher.Tests
         }
 
         [Test]
-        public void PrivatePropertyCantBePatched()
+        public void PrivateProperty_CanNot_BePatched()
         {
             const string newValue = "new value";
             var testObject = new TestObject();
